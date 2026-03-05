@@ -157,6 +157,15 @@ def task_run() -> None:
 
     push.push(status_code, push_message)
 
+    # WxPusher 通知
+    from wxpusher import WxPusher
+    from datetime import datetime
+    status = "✅ 成功" if status_code == StatusCode.SUCCESS.value else "❌ 失败"
+    WxPusher.send_message(
+        f"【任务通知】\n时间:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n状态:{status}\n\n📋 详情：\n{push_message}",
+        uids=["UID_uQq8kfnjGlqSdzJ0wwMx9nQUQvW2"],
+        token="AT_bCIrdXZBHDYRgWd6lj07UndOZLPpdu9b"
+    )
 
 if __name__ == "__main__":
     task_run()
