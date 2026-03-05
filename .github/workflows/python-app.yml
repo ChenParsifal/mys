@@ -26,9 +26,11 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: 创建配置文件
+      env:
+        CONFIG_YAML: ${{ secrets.CONFIG_YAML }}
       run: |
         mkdir -p config
-        echo "${{ secrets.CONFIG_YAML }}" > config/config.yaml
+        python -c "import os; open('config/config.yaml', 'w').write(os.environ['CONFIG_YAML'])"
 
     - name: 运行签到
       run: python main.py
